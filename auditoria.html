@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <title>Auditoría - NUAM</title>
+  <link rel="stylesheet" href="css/styles.css">
+</head>
+<body>
+<div class="layout">
+  <aside class="sidebar">
+    <div class="sidebar-logo">NUAM <span>Tributario</span></div>
+    <ul class="sidebar-menu">
+      <li><a href="dashboard.html">Inicio</a></li>
+      <li><a href="calificaciones.html">Calificaciones</a></li>
+      <li><a href="factores.html">Factores</a></li>
+      <li><a href="auditoria.html" class="active">Auditoría</a></li>
+      <li><a href="usuarios.html">Usuarios</a></li>
+    </ul>
+    <div class="sidebar-footer">
+      Proyecto Integrado · 2025
+    </div>
+  </aside>
+
+  <main class="main">
+    <header class="main-header">
+      <h1 class="main-title">Historial de cambios</h1>
+      <span class="user-badge" id="userBadge"></span>
+    </header>
+
+    <section class="card">
+      <h2 class="card-title">Auditoría del sistema</h2>
+      <p class="page-subtitle">
+        Registro de modificaciones realizadas por los usuarios.
+      </p>
+
+      <div class="table-wrapper">
+        <table>
+          <thead>
+          <tr>
+            <th>ID Calificación</th>
+            <th>Usuario</th>
+            <th>Tipo</th>
+            <th>Fecha</th>
+          </tr>
+          </thead>
+          <tbody id="tbodyAuditoria"></tbody>
+        </table>
+      </div>
+    </section>
+  </main>
+</div>
+
+<script src="js/data.js"></script>
+<script src="js/app.js"></script>
+</body>
+</html>

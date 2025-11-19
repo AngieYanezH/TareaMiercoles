@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <title>Dashboard - NUAM</title>
+  <link rel="stylesheet" href="css/styles.css">
+</head>
+<body>
+<div class="layout">
+  <aside class="sidebar">
+    <div class="sidebar-logo">NUAM <span>Tributario</span></div>
+    <ul class="sidebar-menu">
+      <li><a href="dashboard.html" class="active">Inicio</a></li>
+      <li><a href="calificaciones.html">Calificaciones</a></li>
+      <li><a href="factores.html">Factores</a></li>
+      <li><a href="auditoria.html">Auditoría</a></li>
+      <li><a href="usuarios.html">Usuarios</a></li>
+    </ul>
+    <div class="sidebar-footer">
+      Proyecto Integrado · 2025
+    </div>
+  </aside>
+
+  <main class="main">
+    <header class="main-header">
+      <h1 class="main-title">Panel principal</h1>
+      <span class="user-badge" id="userBadge">Sesión: admin.nuam</span>
+    </header>
+
+    <section class="card">
+      <h2 class="card-title">Resumen del sistema</h2>
+      <p class="page-subtitle">
+        Aquí se visualiza un resumen general del estado de las calificaciones tributarias registradas en NUAM.
+      </p>
+
+      <div class="card-row">
+        <div class="card-stat">
+          <div class="card-stat-label">Calificaciones registradas</div>
+          <div class="card-stat-value">2</div>
+        </div>
+        <div class="card-stat">
+          <div class="card-stat-label">Factores configurados</div>
+          <div class="card-stat-value">2</div>
+        </div>
+        <div class="card-stat">
+          <div class="card-stat-label">Última modificación</div>
+          <div class="card-stat-value">02-09-2025</div>
+        </div>
+      </div>
+    </section>
+  </main>
+</div>
+
+<script src="js/data.js"></script>
+<script src="js/app.js"></script>
+</body>
+</html>

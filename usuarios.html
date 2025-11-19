@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <title>Usuarios - NUAM</title>
+  <link rel="stylesheet" href="css/styles.css">
+</head>
+<body>
+<div class="layout">
+  <aside class="sidebar">
+    <div class="sidebar-logo">NUAM <span>Tributario</span></div>
+    <ul class="sidebar-menu">
+      <li><a href="dashboard.html">Inicio</a></li>
+      <li><a href="calificaciones.html">Calificaciones</a></li>
+      <li><a href="factores.html">Factores</a></li>
+      <li><a href="auditoria.html">Auditoría</a></li>
+      <li><a href="usuarios.html" class="active">Usuarios</a></li>
+    </ul>
+    <div class="sidebar-footer">
+      Proyecto Integrado · 2025
+    </div>
+  </aside>
+
+  <main class="main">
+    <header class="main-header">
+      <h1 class="main-title">Gestión de usuarios</h1>
+      <span class="user-badge" id="userBadge"></span>
+    </header>
+
+    <section class="card">
+      <h2 class="card-title">Usuarios del sistema</h2>
+      <p class="page-subtitle">Perfiles autorizados para operar NUAM Tributario.</p>
+
+      <div class="table-wrapper">
+        <table>
+          <thead>
+          <tr>
+            <th>Usuario</th>
+            <th>Rol</th>
+          </tr>
+          </thead>
+          <tbody id="tbodyUsuarios"></tbody>
+        </table>
+      </div>
+    </section>
+  </main>
+</div>
+
+<script src="js/data.js"></script>
+<script src="js/app.js"></script>
+</body>
+</html>

@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <title>Factores - NUAM</title>
+  <link rel="stylesheet" href="css/styles.css">
+</head>
+<body>
+<div class="layout">
+  <aside class="sidebar">
+    <div class="sidebar-logo">NUAM <span>Tributario</span></div>
+    <ul class="sidebar-menu">
+      <li><a href="dashboard.html">Inicio</a></li>
+      <li><a href="calificaciones.html">Calificaciones</a></li>
+      <li><a href="factores.html" class="active">Factores</a></li>
+      <li><a href="auditoria.html">Auditoría</a></li>
+      <li><a href="usuarios.html">Usuarios</a></li>
+    </ul>
+    <div class="sidebar-footer">
+      Proyecto Integrado · 2025
+    </div>
+  </aside>
+
+  <main class="main">
+    <header class="main-header">
+      <h1 class="main-title">Factores tributarios</h1>
+      <span class="user-badge" id="userBadge"></span>
+    </header>
+
+    <section class="card">
+      <h2 class="card-title">Carga masiva de factores</h2>
+      <p class="page-subtitle">
+        Aquí puedes cargar un archivo CSV con los factores tributarios actualizados.
+      </p>
+
+      <form id="formCargaFactores">
+        <div class="form-group">
+          <label>Archivo CSV</label>
+          <input type="file" required>
+        </div>
+
+        <div class="form-actions">
+          <button class="btn btn-primary" type="submit">Cargar</button>
+        </div>
+      </form>
+    </section>
+
+    <section class="card">
+      <h2 class="card-title">Factores registrados</h2>
+
+      <div class="table-wrapper">
+        <table>
+          <thead>
+          <tr>
+            <th>Nombre</th>
+            <th>Valor</th>
+          </tr>
+          </thead>
+          <tbody id="tbodyFactores"></tbody>
+        </table>
+      </div>
+    </section>
+  </main>
+</div>
+
+<script src="js/data.js"></script>
+<script src="js/app.js"></script>
+</body>
+</html>

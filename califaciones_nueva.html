@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <title>Nueva calificación - NUAM</title>
+  <link rel="stylesheet" href="css/styles.css">
+</head>
+<body>
+<div class="layout">
+  <aside class="sidebar">
+    <div class="sidebar-logo">NUAM <span>Tributario</span></div>
+    <ul class="sidebar-menu">
+      <li><a href="dashboard.html">Inicio</a></li>
+      <li><a href="calificaciones.html" class="active">Calificaciones</a></li>
+      <li><a href="factores.html">Factores</a></li>
+      <li><a href="auditoria.html">Auditoría</a></li>
+      <li><a href="usuarios.html">Usuarios</a></li>
+    </ul>
+    <div class="sidebar-footer">
+      Proyecto Integrado · 2025
+    </div>
+  </aside>
+
+  <main class="main">
+    <header class="main-header">
+      <h1 class="main-title">Registrar calificación</h1>
+      <span class="user-badge" id="userBadge"></span>
+    </header>
+
+    <section class="card">
+      <h2 class="card-title">Datos de la calificación</h2>
+      <form id="formCalificacion">
+        <div class="form-group">
+          <label>RUT contribuyente</label>
+          <input type="text" placeholder="11.111.111-1" required>
+        </div>
+        <div class="form-group">
+          <label>Nombre contribuyente</label>
+          <input type="text" required>
+        </div>
+        <div class="form-group">
+          <label>Periodo (YYYY-MM)</label>
+          <input type="text" placeholder="2025-01" required>
+        </div>
+        <div class="form-group">
+          <label>Categoría tributaria</label>
+          <select required>
+            <option value="">Seleccionar...</option>
+            <option>General</option>
+            <option>Preferente</option>
+          </select>
+        </div>
+        <div class="form-group">
+          <label>Valor</label>
+          <input type="number" min="0" step="1" required>
+        </div>
+
+        <div class="form-actions">
+          <button class="btn btn-primary" type="submit">Guardar</button>
+          <a href="calificaciones.html" class="btn btn-secondary">Cancelar</a>
+        </div>
+      </form>
+    </section>
+  </main>
+</div>
+
+<script src="js/data.js"></script>
+<script src="js/app.js"></script>
+</body>
+</html>
