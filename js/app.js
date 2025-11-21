@@ -12,10 +12,12 @@ import {
   doc,
   deleteDoc,
   getDoc,
-  updateDoc
+  updateDoc,
+  query,
+  where
 } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore.js";
 
-//  TU CONFIGURACIÓN DE FIREBASE
+ //  TU CONFIGURACIÓN DE FIREBASE
 const firebaseConfig = {
   apiKey: "AIzaSyCpuJb5f9ycFwqVzAhgTQz6vm1t_msj1f8",
   authDomain: "tareamiercoles-da0b0.firebaseapp.com",
@@ -26,9 +28,41 @@ const firebaseConfig = {
   measurementId: "G-7N4FTTJ2RG"
 };
 
-// Inicializar Firebase
+ // Inicializar Firebase
 const appFirebase = initializeApp(firebaseConfig);
 const db = getFirestore(appFirebase);
+
+// Función para validar RUT chileno
+function validarRut(rut) {
+  const limpio = rut.replace(/\./g, "").replace(/-/g, "").toUpperCase();
+  if (!/^[0-9]+[0-9K]$/.test(limpio)) return false;
+
+  const cuerpo = limpio.slice(0, -1);
+  const dv = limpio.slice(-1);
+  let suma = 0;
+  let multiplo = 2;
+
+  for (let i = cuerpo.length - 1; i >= 0; i--) {
+    suma += parseInt(cuerpo[i], 10) * multiplo;
+    multiplo = multiplo === 7 ? 2 : multiplo + 1;
+  }
+
+  const resto = suma % 11;
+  const digito = 11 - resto;
+  let dvEsperado;
+  if (digito === 11) dvEsperado = "0";
+  else if (digito === 10) dvEsperado = "K";
+  else dvEsperado = String(digito);
+
+  return dvEsperado === dv;
+}
+
+// Función para validar contraseña segura
+function validarPassword(pass) {
+  if (!pass || pass.length < 8) return false;
+  const tieneEspecial = /[^A-Za-z0-9]/.test(pass);
+  return tieneEspecial;
+}
 
 // ------------------------------------------------------
 //  LÓGICA DEL PROTOTIPO
@@ -50,24 +84,158 @@ document.addEventListener("DOMContentLoaded", async () => {
   // --------------------
   // LOGIN
   // --------------------
+    // --------------------
+  // LOGIN + REGISTRO
+  // --------------------
   if (path.endsWith("index.html") || path.endsWith("/")) {
     const formLogin = document.getElementById("formLogin");
-    if (formLogin) {
-      formLogin.addEventListener("submit", (e) => {
+    const formRegister = document.getElementById("formRegister");
+    const msg = document.getElementById("msg");
+    const msgRegister = document.getElementById("msgRegister");
+    const loginSection = document.getElementById("loginSection");
+    const registerSection = document.getElementById("registerSection");
+    const linkShowRegister = document.getElementById("linkShowRegister");
+    const linkShowLogin = document.getElementById("linkShowLogin");
+
+    const usuariosRef = collection(db, "usuarios");
+
+    const mostrarLogin = () => {
+      if (loginSection) loginSection.classList.remove("hidden");
+      if (registerSection) registerSection.classList.add("hidden");
+      if (msg) msg.textContent = "";
+      if (msgRegister) msgRegister.textContent = "";
+    };
+
+    const mostrarRegistro = () => {
+      if (loginSection) loginSection.classList.add("hidden");
+      if (registerSection) registerSection.classList.remove("hidden");
+      if (msg) msg.textContent = "";
+      if (msgRegister) msgRegister.textContent = "";
+    };
+
+    if (linkShowRegister) {
+      linkShowRegister.addEventListener("click", (e) => {
         e.preventDefault();
-        const rut = document.getElementById("rut").value.trim();
-        const password = document.getElementById("password").value.trim();
+        mostrarRegistro();
+      });
+    }
+
+    if (linkShowLogin) {
+      linkShowLogin.addEventListener("click", (e) => {
+        e.preventDefault();
+        mostrarLogin();
+      });
+    }
+
+    // --- LOGIN ---
+    if (formLogin) {
+      formLogin.addEventListener("submit", async (e) => {
+        e.preventDefault();
+        if (msg) msg.textContent = "";
+
+        const rutInput = document.getElementById("rut");
+        const passwordInput = document.getElementById("password");
+        const rut = rutInput ? rutInput.value.trim() : "";
+        const password = passwordInput ? passwordInput.value.trim() : "";
 
         if (!rut || !password) {
-          alert("Por favor ingresa tu RUT y contraseña.");
+          if (msg) msg.textContent = "Por favor ingresa tu RUT y contraseña.";
           return;
         }
 
-        sessionStorage.setItem("usuarioActual", rut);
-        window.location.href = "dashboard.html";
+        if (!validarRut(rut)) {
+          if (msg) msg.textContent = "El RUT ingresado no es válido.";
+          return;
+        }
+
+        if (!validarPassword(password)) {
+          if (msg) msg.textContent = "La contraseña debe tener al menos 8 caracteres y un carácter especial.";
+          return;
+        }
+
+        try {
+          const rutLimpio = rut.replace(/\./g, "").replace(/-/g, "").toUpperCase();
+          const q = query(usuariosRef, where("rut", "==", rutLimpio));
+          const snapshot = await getDocs(q);
+
+          if (snapshot.empty) {
+            if (msg) msg.textContent = "Usuario no registrado. Regístrate primero.";
+            return;
+          }
+
+          const data = snapshot.docs[0].data();
+          if (data.password !== password) {
+            if (msg) msg.textContent = "Contraseña incorrecta.";
+            return;
+          }
+
+          sessionStorage.setItem("usuarioActual", data.nombre || rutLimpio);
+          sessionStorage.setItem("rolUsuario", data.rol || "");
+          window.location.href = "dashboard.html";
+        } catch (error) {
+          console.error(error);
+          if (msg) msg.textContent = "Error al iniciar sesión. Intenta nuevamente.";
+        }
+      });
+    }
+
+    // --- REGISTRO ---
+    if (formRegister) {
+      formRegister.addEventListener("submit", async (e) => {
+        e.preventDefault();
+        if (msgRegister) msgRegister.textContent = "";
+
+        const nombre = document.getElementById("nombreRegistro").value.trim();
+        const rut = document.getElementById("rutRegistro").value.trim();
+        const rol = document.getElementById("rolRegistro").value;
+        const password = document.getElementById("passwordRegistro").value.trim();
+
+        if (!nombre || !rut || !rol || !password) {
+          if (msgRegister) msgRegister.textContent = "Completa todos los campos.";
+          return;
+        }
+
+        if (!validarRut(rut)) {
+          if (msgRegister) msgRegister.textContent = "El RUT ingresado no es válido.";
+          return;
+        }
+
+        if (!validarPassword(password)) {
+          if (msgRegister) msgRegister.textContent = "La contraseña debe tener al menos 8 caracteres y un carácter especial.";
+          return;
+        }
+
+        try {
+          const rutLimpio = rut.replace(/\./g, "").replace(/-/g, "").toUpperCase();
+
+          // Verificar que el usuario no exista
+          const q = query(usuariosRef, where("rut", "==", rutLimpio));
+          const snapshot = await getDocs(q);
+          if (!snapshot.empty) {
+            if (msgRegister) msgRegister.textContent = "Ya existe un usuario registrado con ese RUT.";
+            return;
+          }
+
+          await addDoc(usuariosRef, {
+            nombre,
+            rut: rutLimpio,
+            rol,
+            password,
+            creadoEn: new Date().toISOString()
+          });
+
+          if (msgRegister) msgRegister.textContent = "Usuario registrado correctamente. Ahora puedes iniciar sesión.";
+          setTimeout(() => {
+            mostrarLogin();
+          }, 1500);
+        } catch (error) {
+          console.error(error);
+          if (msgRegister) msgRegister.textContent = "Error al registrar usuario. Intenta nuevamente.";
+        }
       });
     }
   }
+
 
   // --------------------
   // Mostrar usuario en dashboard

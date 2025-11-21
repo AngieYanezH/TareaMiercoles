@@ -326,3 +326,31 @@ tbody tr:hover {
 .btn-outline:hover {
   background-color: #e5edff;
 }
+
+/* Registro */
+.hidden {
+  display: none;
+}
+
+.register-text {
+  margin-top: 1rem;
+  font-size: 0.85rem;
+  text-align: center;
+}
+
+.register-text a {
+  color: #2563eb;
+  text-decoration: none;
+  font-weight: 600;
+}
+
+.register-text a:hover {
+  text-decoration: underline;
+}
+
+.help-text {
+  display: block;
+  margin-top: 0.35rem;
+  font-size: 0.75rem;
+  color: #6b7280;
+}
