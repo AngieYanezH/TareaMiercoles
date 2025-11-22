@@ -1,0 +1,144 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <title>Situación tributaria - NUAM</title>
+  <link rel="stylesheet" href="css/styles.css">
+</head>
+<body>
+<div class="layout">
+  <!-- SIDEBAR -->
+  <aside class="sidebar">
+    <div class="sidebar-logo">NUAM <span>Tributario</span></div>
+    <ul class="sidebar-menu">
+      <li><a href="dashboard.html">Inicio</a></li>
+      <li><a href="calificaciones.html">Calificaciones</a></li>
+      <li><a href="factores.html">Factores</a></li>
+      <li><a href="auditoria.html">Auditoría</a></li>
+      <li><a href="usuarios.html">Usuarios</a></li>
+      <li><a href="situacion_tributaria.html" class="active">Situación tributaria</a></li>
+    </ul>
+    <div class="sidebar-footer">
+      Proyecto Integrado · 2025
+    </div>
+  </aside>
+
+  <!-- CONTENIDO PRINCIPAL -->
+  <main class="main">
+    <header class="main-header">
+      <h1 class="main-title">Situación tributaria y simulador</h1>
+      <span class="user-badge" id="userBadge"></span>
+    </header>
+
+    <!-- FORMULARIO TIPO SII -->
+    <section class="card">
+      <h2 class="card-title">Datos del contribuyente (similar a consulta SII)</h2>
+      <p class="page-subtitle">
+        Completa la información tal como aparece en la consulta de situación tributaria del SII.
+      </p>
+
+      <form id="formDatosSII">
+        <div class="form-group">
+          <label for="rutContribuyente">RUT</label>
+          <input type="text" id="rutContribuyente" placeholder="11.111.111-1">
+        </div>
+
+        <div class="form-group">
+          <label for="razonSocial">Nombre / Razón social</label>
+          <input type="text" id="razonSocial" placeholder="Nombre completo o razón social">
+        </div>
+
+        <div class="form-group">
+          <label for="tipoContribuyente">Tipo de contribuyente</label>
+          <select id="tipoContribuyente">
+            <option value="">Selecciona…</option>
+            <option>Persona natural</option>
+            <option>Persona jurídica</option>
+          </select>
+        </div>
+
+        <div class="form-group">
+          <label for="giro">Giro / Actividad económica</label>
+          <input type="text" id="giro" placeholder="Ej: Servicios profesionales">
+        </div>
+
+        <div class="form-group">
+          <label for="regimenTributario">Régimen tributario</label>
+          <input type="text" id="regimenTributario" placeholder="Ej: 14A, 14D3, etc.">
+        </div>
+
+        <div class="form-group">
+          <label for="domicilio">Domicilio</label>
+          <input type="text" id="domicilio" placeholder="Dirección registrada en SII">
+        </div>
+
+        <div class="form-group">
+          <label for="comuna">Comuna</label>
+          <input type="text" id="comuna" placeholder="Comuna">
+        </div>
+
+        <div class="form-group">
+          <label for="region">Región</label>
+          <input type="text" id="region" placeholder="Región">
+        </div>
+
+        <div class="form-group">
+          <label for="estadoContribuyente">Estado del contribuyente</label>
+          <select id="estadoContribuyente">
+            <option value="">Selecciona…</option>
+            <option>Vigente</option>
+            <option>Suspendido</option>
+            <option>Con giro temporal</option>
+          </select>
+        </div>
+      </form>
+    </section>
+
+    <!-- SIMULADOR SUELDO + RENTA + IVA -->
+    <section class="card">
+      <h2 class="card-title">Simulador de impuestos según sueldo</h2>
+      <p class="page-subtitle">
+        Ingresa el sueldo bruto mensual para estimar el descuento por Impuesto a la Renta y el IVA asociado.
+        <br>(Cálculo simplificado para fines académicos, no reemplaza la tabla oficial del SII).
+      </p>
+
+      <form id="formSimulador">
+        <div class="form-group">
+          <label for="sueldoBruto">Sueldo bruto mensual</label>
+          <input type="number" id="sueldoBruto" placeholder="Ej: 900000">
+        </div>
+
+        <div class="form-group">
+          <label for="porcentajeRenta">Porcentaje renta (aprox.)</label>
+          <input type="text" id="porcentajeRenta" readonly>
+        </div>
+
+        <div class="form-group">
+          <label for="montoRenta">Descuento por renta</label>
+          <input type="text" id="montoRenta" readonly>
+        </div>
+
+        <div class="form-group">
+          <label for="montoIVA">IVA estimado (19%)</label>
+          <input type="text" id="montoIVA" readonly>
+        </div>
+
+        <div class="form-group">
+          <label for="sueldoLiquido">Sueldo líquido aproximado</label>
+          <input type="text" id="sueldoLiquido" readonly>
+        </div>
+
+        <div class="form-actions">
+          <button type="submit" class="btn btn-primary">Calcular</button>
+          <button type="button" class="btn btn-secondary" id="btnLimpiarSimulador">Limpiar</button>
+        </div>
+      </form>
+    </section>
+
+  </main>
+</div>
+
+<!-- JS -->
+<script type="module" src="js/app.js"></script>
+</body>
+</html>
